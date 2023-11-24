@@ -1,8 +1,10 @@
 from aws_cdk import (
     # Duration,
+    Aspects,
     Stack,
     # aws_sqs as sqs,
 )
+from cdk_nag import AwsSolutionsChecks
 from constructs import Construct
 
 class ServiceStack(Stack):
@@ -17,3 +19,9 @@ class ServiceStack(Stack):
         #     self, "UniversalProfileServiceQueue",
         #     visibility_timeout=Duration.seconds(300),
         # )
+        # add security check
+        self._add_security_tests()
+        
+    def _add_security_tests(self) -> None:
+        Aspects.of(self).add(AwsSolutionsChecks(verbose=True))
+        # Suppress a specific rule for this resource
