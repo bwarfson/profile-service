@@ -3,11 +3,11 @@ import os
 
 import aws_cdk as cdk
 
-from universal_profile_service.universal_profile_service_stack import UniversalProfileServiceStack
+from cdk.service_stack import ServiceStack
 
 
 app = cdk.App()
-UniversalProfileServiceStack(app, "UniversalProfileServiceStack",
+ServiceStack(app, "ServiceStack",
     # If you don't specify 'env', this stack will be environment-agnostic.
     # Account/Region-dependent features and context lookups will not work,
     # but a single synthesized template can be deployed anywhere.
