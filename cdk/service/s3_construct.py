@@ -16,7 +16,7 @@ class S3Construct(Construct):
     def _build_access_logs_bucket(self) -> s3.Bucket:
         return s3.Bucket(
             self,
-            id='access-logs-bucket',
+            id=f'{self.id_}-access-logs-bucket',
             bucket_name=f'{self.id_}-access-logs-bucket',
             access_control=s3.BucketAccessControl.BUCKET_OWNER_FULL_CONTROL,
             block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
@@ -27,11 +27,11 @@ class S3Construct(Construct):
             versioned=True,
             enforce_ssl=True
         )
-    
+
     def _build_temp_bucket(self) -> s3.Bucket:
         return s3.Bucket(
             self,
-            id='temp-bucket',
+            id=f'{self.id_}-temp-bucket',
             bucket_name=f'{self.id_}-temp-bucket',
             access_control=s3.BucketAccessControl.BUCKET_OWNER_FULL_CONTROL,
             block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
@@ -44,3 +44,7 @@ class S3Construct(Construct):
             versioned=False,
             enforce_ssl=True
         )
+
+    def add_event_notification(self, event, destination):
+        """ Add event notification to temp bucket """
+        self.temp_bucket.add_event_notification(event, destination)
